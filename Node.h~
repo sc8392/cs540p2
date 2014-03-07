@@ -1,0 +1,30 @@
+
+#ifndef TREE_NODE_H__
+#define TREE_NODE_H__
+
+#include <string>
+
+
+class TreeNode {
+    // note, just for this assignment, to allow pointer notation
+    // for linked lists, the data members of a node have been made public
+    // This DOES violate the ADT principles that we have discussed.
+ public:
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+  
+ public:
+    TreeNode();
+    TreeNode(int dataIn, TreeNode* leftIn, TreeNode*rightIn);
+    TreeNode *getLeft();
+    TreeNode *getRight();
+    void setLeft(TreeNode* leftIn);
+    void setRight(TreeNode* rightIn);
+    int getData();
+    void setData(int dataIn);
+    ~TreeNode();
+};
+
+
+#endif // NODE_H__

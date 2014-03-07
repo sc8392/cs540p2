@@ -1,0 +1,64 @@
+
+#include "TreeNode.h"
+
+using namespace std;
+
+// initializes the data and the left and right nodes
+TreeNode::TreeNode() {
+    // FIXME
+    // set data members to NULL values
+  data = NULL;
+  left = NULL;
+  right = NULL;
+}
+
+// explicit value contructor
+// initializes the data, left and right to the given data, left and right
+TreeNode::TreeNode(int dataIn, TreeNode* leftIn, TreeNode* rightIn) {
+    // FIXME
+    // initialize object state in the explicit value constructor
+  data = dataIn;
+  left = leftIn;
+  right = rightIn;
+}
+
+// returns the left node
+TreeNode* TreeNode::getLeft() {
+    // FIXME
+  return left;
+}
+
+// returns the right node
+TreeNode* TreeNode::getRight() {
+    // FIXME
+  return right;
+}
+
+
+    
+// changes what left is pointing to
+void TreeNode::setLeft(TreeNode* leftIn) {
+    left = leftIn;
+}
+
+// changes what right is pointing to
+void TreeNode::setRight(TreeNode* rightIn) {
+    right = rightIn;
+}
+
+// returns the data in the node
+int TreeNode::getData() {
+    // FIXME
+  return data;
+}
+
+// changes the data in the current node
+void TreeNode::setData(int dataIn) {
+    // FIXME
+  data = dataIn; 
+}
+
+// deletes the data
+TreeNode::~TreeNode() {
+   
+}
