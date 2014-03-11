@@ -1,25 +1,35 @@
-#ifndef BINARY_SEARCH_TREE__
-#define BINARY_SEARCH_TREE__
+#ifndef BST_H__
+#define BST_H__
 
+#include <utility>
 #include <iostream>
-#include "TreeNode.h"
+#include "Node.h"
 
-class BinarySearchTree{
+template<class Key, class Value>
+class BST{
  public:
-  BinarySearchTree();
-  ~BinarySearchTree();
-  bool bstSearch(int item);
-  void insert(int item);
-  void insertRec(int item, TreeNode* rootin);
+  BST();
+  ~BST();
+  BST(const BST<Key, Value> &bst);
+  Node<Key, Value>* bstSearch(Key k);
+  void insert(std::pair<Key, Value>* item);
+  void insertRec(std::pair<Key, Value> *item, Node<Key, Value>* rootin);
+  void deleteValue(Key k);
+  void deleteRec(Key k, Node<Key, Value>* rootin);
+  void deleteTree(Node<Key, Value>* rootin);
+  Node<Key, Value>* findPredecessor(Node<Key, Value> *n); 
+  Node<Key, Value>* findSuccessor(Node<Key, Value> *n);
+  
   void traverseInOrder();
-  void traverseInOrderRec(TreeNode* rootin);
-  void traverseDescendingOrder();
-  void traverseDescendingOrderRec(TreeNode* rootin);
-  void deleteTree(TreeNode* rootin);
-       
- 
+  void traverseInOrderRec(Node<Key, Value>* rootin);
+
+  void traverseInOrderSuc();
+
  private:
-  TreeNode* root;
+  Node<Key, Value>* root;
+  
 };
 
-#endif // BINARY_SEARCH_TREE__
+#include "BST.cpp"
+
+#endif // BST__

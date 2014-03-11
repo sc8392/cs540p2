@@ -1,54 +1,92 @@
+#include <utility>
 #include "Node.h"
 
 
 // initializes the data and the left and right nodes
-Node::Node() {
-  data = NULL;
-  left = NULL;
-  right = NULL;
-  
-}
-
-// explicit value contructor
-// initializes the data, left and right to the given data, left and right
-Node::Node(int dataIn, Node* leftIn, Node* rightIn) {
-  data = dataIn;
-  left = leftIn;
-  right = rightIn;
+template <class Key, class Value>
+Node<Key, Value>::Node(): data(nullptr),parent(nullptr), right(nullptr), 
+	      successor(nullptr), predecessor(nullptr), left(nullptr){
 }
 
 // returns the left node
-Node* Node::getLeft() {
+template <class Key, class Value>
+Node<Key, Value>* Node<Key, Value>::getLeft() {
   return left;
 }
 
 // returns the right node
-Node* Node::getRight() {
+template <class Key, class Value>
+Node<Key, Value>* Node<Key, Value>::getRight() {
   return right;
 }
 
 
 // changes what left is pointing to
-void Node::setLeft(Node* leftIn) {
+template <class Key, class Value>
+void Node<Key, Value>::setLeft(Node* leftIn) {
   left = leftIn;
 }
 
 // changes what right is pointing to
-void Node::setRight(Node* rightIn) {
+template <class Key, class Value>
+void Node<Key, Value>::setRight(Node* rightIn) {
   right = rightIn;
 }
 
-// returns the data in the node
-int Node::getData() {
+// returns the key of the pair in node
+template <class Key, class Value>
+Key& Node<Key, Value>::getKey() {
+  return data->first;
+}
+
+template <class Key, class Value>
+Value& Node<Key,Value>::getValue(){
+  return data->second;
+}
+
+template <class Key, class Value>
+std::pair<Key, Value>* Node<Key, Value>::getPair(){
   return data;
 }
 
 // changes the data in the current node
-void Node::setData(int dataIn) {
+template <class Key, class Value>
+void Node<Key, Value>::setData(std::pair<Key, Value> *dataIn) {
   data = dataIn; 
 }
 
 // deletes the data
-Node::~Node() {
-   
+template <class Key, class Value>
+Node<Key, Value>::~Node() {
+  delete data;
+}
+
+template <class Key, class Value>
+Node<Key, Value>* Node<Key, Value>::getSuccessor(){
+  return successor;
+}
+
+template <class Key, class Value>
+Node<Key, Value>* Node<Key, Value>::getPredecessor(){
+  return predecessor;
+}
+
+template <class Key, class Value>
+Node<Key, Value>* Node<Key, Value>::getParent(){
+  return parent;
+}
+
+template <class Key, class Value>
+void Node<Key, Value>::setSuccessor(Node *successorIn){
+  successor = successorIn;
+}
+
+template <class Key, class Value>
+void Node<Key, Value>::setPredecessor(Node *predecessorIn){
+  predecessor = predecessorIn;
+}
+
+template <class Key, class Value>
+void Node<Key, Value>::setParent(Node *parentIn){
+  parent = parentIn;
 }
