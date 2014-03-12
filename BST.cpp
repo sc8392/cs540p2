@@ -10,6 +10,7 @@ BST<Key, Value>::BST(){
   root = nullptr;
 }
 
+
 /*
  * destructor
  */
@@ -47,12 +48,13 @@ Node<Key, Value>* BST<Key, Value>::bstSearch(Key k){
  * inserts data in the proper location in the tree
  */
 template<class Key, class Value>
-void BST<Key, Value>::insert(std::pair<Key, Value>* item){
+Node<Key, Value>* BST<Key, Value>::insert(std::pair<Key, Value>* item){
+  size++;
   if(root == nullptr){
     root = new Node<Key, Value>();
     root->setData(item);
   } else {
-    insertRec(item,root);
+    return insertRec(item,root);
   }
 }
 
@@ -60,14 +62,14 @@ void BST<Key, Value>::insert(std::pair<Key, Value>* item){
  * insterts a value into the BST while keeping it a BST
  */
 template<class Key, class Value>
-void 
+Node<Key, Value>*
 BST<Key, Value>::insertRec(std::pair<Key, Value>* item, Node<Key, Value>* rootin){
   if(rootin->getKey() == item->first){
     if(item == rootin->getPair()){
-      return;
+      return rootin;
     }
     delete item;//items different but has the same key
-    return;
+    return rootin;
   } if(rootin->getKey() > item->first){
 
     if(rootin->getLeft() == nullptr){
@@ -91,8 +93,10 @@ BST<Key, Value>::insertRec(std::pair<Key, Value>* item, Node<Key, Value>* rootin
       if(succ != nullptr){
 	succ->setPredecessor(current);
       }      
+      return rootin->getLeft();
+
     } else {
-      insertRec(item, rootin->getLeft());
+      return insertRec(item, rootin->getLeft());
     }
 
   } else if(rootin->getKey() < item->first){
@@ -119,31 +123,32 @@ BST<Key, Value>::insertRec(std::pair<Key, Value>* item, Node<Key, Value>* rootin
       if(succ != nullptr){
 	succ->setPredecessor(current);
       }     
+      return rootin->getRight();
 
     } else {
-      insertRec(item, rootin->getRight());
+      return insertRec(item, rootin->getRight());
     }
   } 
 }
 
 template<class Key, class Value>
-void BST<Key, Value>::deleteValue(Key k){
+int BST<Key, Value>::deleteValue(Key k){
   if(root == nullptr){
-    return;
+    return -1;
   }
-  deleteRec(k, root);
+  return deleteRec(k, root);
 }
 
 /*
  * deletes the value fixed the tree so that it is still a binary tree
  */
 template<class Key, class Value>
-void BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
+int BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
   
-  if(rootin == nullptr) return;
+  if(rootin == nullptr) return -1;
   
   if(rootin->getKey() == k){
-
+    size--;
     if((rootin->getLeft() != nullptr) && (rootin->getRight() != nullptr)){
       //swaps data with successor
       std::pair<Key, Value> *temp;
@@ -153,7 +158,7 @@ void BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
       rootin->setData(rootin->getSuccessor()->getPair());
       rootin->getSuccessor()->setData(temp);
       
-      this->deleteRec(k, rootin->getSuccessor());
+      return this->deleteRec(k, rootin->getSuccessor());
 
     } else if (rootin->getRight() != nullptr){
       //right child is the new parent
@@ -183,6 +188,7 @@ void BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
       }
 
       delete rootin;
+      return 1;
 
     } else if (rootin->getLeft() != nullptr){
       //left child is the new parent
@@ -212,7 +218,7 @@ void BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
       }
 
       delete rootin;
-
+      return 1;
       
     } else {//is leaf
       Node<Key,Value> *tempNode;
@@ -221,7 +227,7 @@ void BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
       if(rootin == root){
 	root = nullptr;
 	delete rootin;
-	return;
+	return 1;
       }
 
       //set the predecessors and successors of the node
@@ -242,13 +248,14 @@ void BST<Key, Value>::deleteRec(Key k, Node<Key, Value>* rootin){
 	parent->setRight(nullptr); 
       }
       delete rootin;
+      return 1;
     }
 
   } else if (rootin->getKey() < k){
-    deleteRec(k, rootin->getRight());
+    return deleteRec(k, rootin->getRight());
     
   } else if (rootin->getKey() > k){
-    deleteRec(k, rootin->getLeft());
+    return deleteRec(k, rootin->getLeft());
   
   } 
   return;

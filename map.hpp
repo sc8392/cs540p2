@@ -64,6 +64,7 @@ namespace cs540{
     Map(const Map<Key, Value>& m);
     Map& operator=(const Map<Key, Value>& m);
     Map(Map<Key, Value>&& m);
+    Map& operator=(Map<Key, Value> &&m);
     Map(std::initializer_list<std::pair<const Key, Value> > list);
     ~Map();
     
@@ -75,14 +76,14 @@ namespace cs540{
 
     Map::Iterator find(const Key& k);
     Map::ConstIterator find(const Key& k) const;
-    Value& at(const Key &);
-    const Value& at(const Key &) const;
-    Value& operator[](const Key&);
+    Value& at(const Key &k);
+    const Value& at(const Key &k) const;
+    Value& operator[](const Key&k);
 
     std::size_t size() const;
     bool empty() const;
-    bool operator==(const Map<Key, Value>&) const;
-    bool operator!=(const Map<Key, Value>&) const;
+    bool operator==(const Map<Key, Value>&m) const;
+    bool operator!=(const Map<Key, Value>&m) const;
     
     Map::Iterator begin();
     Map::Iterator end();
@@ -107,6 +108,7 @@ namespace cs540{
     friend bool operator!=(const Iterator&, const ConstIterator&){}
     
   private:
+    void recCopy(Node<Key,Value> &n);
 
   };
 
